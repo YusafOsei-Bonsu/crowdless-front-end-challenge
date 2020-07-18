@@ -1,7 +1,6 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import MapView from 'react-native-maps';
-import { StyleSheet, Text, View, Dimensions } from 'react-native';
+import { StyleSheet, View, Dimensions } from 'react-native';
 
 class App extends React.Component {
 
@@ -17,14 +16,12 @@ class App extends React.Component {
 }
 
 const styles = StyleSheet.create({
-
   container: {
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },
-
   mapStyle: {
     width: Dimensions.get("window").width,
     height: Dimensions.get("window").height
