@@ -1,6 +1,6 @@
 import React from 'react';
 import MapView, { PROVIDER_GOOGLE,  Marker } from 'react-native-maps';
-import { StyleSheet, View, Dimensions, Platform } from 'react-native';
+import { StyleSheet, View, Dimensions, Platform, Alert } from 'react-native';
 import { request, PERMISSIONS } from 'react-native-permissions';
 import Geolocation from '@react-native-community/geolocation';
 
@@ -9,8 +9,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      latitude: 0.0,
-      longitude: 0.0,
+      initialPosition: {},
     }
   }
   
@@ -18,7 +17,19 @@ class App extends React.Component {
   locateCurrentPosition = () => {
     Geolocation.getCurrentPosition(position => {
       console.log(JSON.stringify(position));
-    });
+
+      let initialPosition = {
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude,
+        latitudeDelta: 0.09,
+        longitudeDelta: 0.035
+      }
+
+      this.setState({ initialPosition });
+    },
+    err => Alert.alert(err.message),
+    { enableHighAccuracy: true, timeout: 10000, maximumAge: 1000 }
+    );
   }
 
   // Request permission to use device's location services
@@ -41,7 +52,6 @@ class App extends React.Component {
     }
   }
 
-
   componentDidMount() {
     this.requestLocationPermission();
   }
@@ -51,18 +61,16 @@ class App extends React.Component {
       <View style={styles.container}>
         {/* Expands the map to fit the entire viewport */}
         <MapView 
+          ref={map => this._map = map}
           style={styles.mapStyle}
           showsUserLocation={true}
           provider={PROVIDER_GOOGLE}
-          initialRegion={{
-            latitude: 37.78825,
-            longitude: -122.4324,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421
-          }}>
+          initialRegion={this.state.initialPosition}>
           <Marker
-            coordinate={{ latitude: 37.7825259, longitude: -122.4351431 }}
-            title={"San Francisco"}>
+            coordinate={{ 
+              latitude: this.state.initialPosition.latitude, 
+              longitude: this.state.initialPosition.longitude }}
+            title={"Your Current Position"}>
   
           </Marker>
         </MapView>
