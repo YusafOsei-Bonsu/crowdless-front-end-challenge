@@ -6,19 +6,21 @@ class App extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      latitude: 37.78825,
-      longitude: -122.4324
-    }
+    this.state = {}
   }
   
   // Find the current location of the user
   findCurrentLocation = () => {
     navigator.geolocation.getCurrentPosition(position => {
-      this.setState({
+      
+      let initialPosition = {
         latitude: position.coords.latitude,
-        longitude: position.coords.longitude
-      })
+        longitude: position.coords.longitude,
+        latitudeDelta: 0.01,
+        longitudeDelta: 0.01
+      }
+
+      this.setState({ initialPosition });
     }, err => {
       Alert.alert(err.message)
     },
@@ -35,25 +37,26 @@ class App extends React.Component {
       <View style={styles.container}>
         {/* Expands the map to fit the entire viewport */}
         <MapView
+          ref={map => this_map = map}
           style={styles.mapStyle}
           showsUserLocation={true}
           followsUserLocation={true}
           provider={PROVIDER_GOOGLE}
-          initialRegion={{
-            latitude: this.state.latitude,
-            longitude: this.state.longitude,
-            latitudeDelta: 0.01,
-            longitudeDelta: 0.01
-          }}>
+          initialRegion={this.state.initialPosition}>
+          
           <Marker
-            coordinate={{ 
-              latitude: this.state.latitude, 
-              longitude: this.state.longitude 
-            }}
-            title={"Your Current Position"}>
-  
-          </Marker>
+            title={"Your current location"}
+            coordinate={this.state.initialPosition && {
+                latitude: this.state.initialPosition.latitude,
+                longitude: this.state.initialPosition.longitude
+              } || {
+                latitude: 0,
+                longitude: 0
+              }
+            } /> 
+            
         </MapView>
+
       </View>
     );
   }
