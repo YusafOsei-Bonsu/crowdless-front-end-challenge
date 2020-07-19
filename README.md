@@ -15,4 +15,4 @@ First, I set the map to fill the entire viewport. Next, I wrote code that locate
 | Blockers        | Resolutions           | 
 | --------------- |----------------------:| 
 | Expo couldn't run app because `38.0.0 is not a valid sdk version`  | Entered `expo client:install:android` into the terminal to upgrade the expo client app |
-| `Error: react-native-permissions: NativeModule.RNPermissions is null`  | |
+| `Error: react-native-permissions: NativeModule.RNPermissions is null`  | Replaced all permission code with the built-in navigator geolocation |
