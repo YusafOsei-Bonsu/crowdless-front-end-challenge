@@ -5,7 +5,7 @@ This mini-project focuses on creating a functional/class component (in React Nat
 - Initially fetch places for a given user location and time.
 - Display places as markers (images in attachment) with different colors on the map component. (green ⇔ not busy, orange ⇔ busy, red ⇔ very busy).abs
 
-First, I set the map to fill the entire viewport. 
+First, I set the map to fill the entire viewport. Next, I wrote code that located and tracked the user's current location. 
 
 ## Tech Stack
 - React Native
