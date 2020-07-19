@@ -1,18 +1,27 @@
 import React from 'react';
-import MapView from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { StyleSheet, View, Dimensions } from 'react-native';
 
-class App extends React.Component {
+const App = () => {
 
-  render() {
-    return (
-      <View style={styles.container}>
-        {/* Shows the entire map which covers the entire viewport */}
-        <MapView style={styles.mapStyle} />
-      </View>
-    );
-  }
-
+  return (
+    <View style={styles.container}>
+      {/* Expands the map to fit the entire viewport */}
+      <MapView 
+        style={styles.mapStyle}
+        showsUserLocation={true}
+        followsUserLocation={true}
+        provider={PROVIDER_GOOGLE}
+        initialRegion={{
+          latitude: 37.78825,
+          longitude: -122.4324,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421
+        }}
+      />
+    </View>
+  );
+  
 }
 
 const styles = StyleSheet.create({
