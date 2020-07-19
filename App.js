@@ -1,5 +1,5 @@
 import React from 'react';
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE,  Marker } from 'react-native-maps';
 import { StyleSheet, View, Dimensions } from 'react-native';
 
 const App = () => {
@@ -17,8 +17,13 @@ const App = () => {
           longitude: -122.4324,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421
-        }}
-      />
+        }}>
+        <Marker
+          coordinate={{ latitude: 37.7825259, longitude: -122.4351431 }}
+          title={"San Francisco"}>
+
+        </Marker>
+      </MapView>
     </View>
   );
   
