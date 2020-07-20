@@ -9,7 +9,9 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      places: []
+      places: [],
+      lat: 0.0,
+      long: 0.0
     }
   }
   
@@ -23,10 +25,14 @@ class App extends React.Component {
         latitudeDelta: 0.01,
         longitudeDelta: 0.01
       }
-
-      this.setState({ initialPosition });
+      
+      this.setState({ 
+        initialPosition, 
+        lat: initialPosition.latitude, 
+        long: initialPosition.longitude 
+      });
     }, err => {
-      Alert.alert(err.message)
+      Alert.alert(err.message);
     },
     { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
     );
@@ -34,23 +40,33 @@ class App extends React.Component {
 
   // Fetches places based on timestamp & user location 
   getPlaces = () => {
+    // The API endpoint to get the places
     const apiEndpoint = "https://crowdless.com/default/places";
     
-    let currentDate = new Date();
-    let timestamp = currentDate.toUTCString(); 
+    // Converting current date into UTC timestamp
+    let timestamp = new Date().toUTCString(); 
 
-    console.log(`${apiEndpoint}\n${API_KEY}\n${timestamp}`);
-
-    // const body = {
-    //   coords: { lat: location.latitude, lng: location.longitude },
-    //   time_stamp: ""
-    // }
+    // Fetches the initial places
+    Axios.post(apiEndpoint, {
+      coords: { lat: this.state.lat, lng: this.state.long },
+      time_stamp: timestamp
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': `${API_KEY}`
+      }
+    }).then(response => {
+      console.log(response);
+    }).catch(err => {
+      console.log(err);
+    })
   }
 
   showCallout = (place) => console.log(`Show callout called ${place}`);
 
   componentDidMount() {
     this.findCurrentLocation();
+    this.getPlaces();
   }
 
   render() {
