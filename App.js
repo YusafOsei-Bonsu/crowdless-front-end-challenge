@@ -1,7 +1,6 @@
 import React from 'react';
 import MapView, { PROVIDER_GOOGLE,  Marker } from 'react-native-maps';
 import { StyleSheet, View, Dimensions, Alert } from 'react-native';
-import Axios from "axios";
 import { API_KEY } from "@env";
 
 class App extends React.Component {
@@ -44,24 +43,26 @@ class App extends React.Component {
     const apiEndpoint = "https://crowdless.com/default/places";
     // Converting current date into UTC timestamp
     const timestamp = new Date().toUTCString(); 
-    // POST request body
-    const body = {
-      coords: { lat: this.state.lat, lng: this.state.long },
-      time_stamp: timestamp
-    }
 
-    console.log("Fetching places..")
-    // Fetches the initial places
-    Axios.post(apiEndpoint, body, {
-      headers: {
-        "x-api-key": API_KEY
-      }
-    }).then(res => {
-      console.log(res.data);
-    }).catch(err => {
-      console.error(err);
-    });
-    console.log("Fetching complete.")
+       // Fetching the places from the API
+    fetch(apiEndpoint, {
+        method: 'POST',
+        headers: {
+          'x-api-key': `${API_KEY}`,
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          coords: { lat: this.state.lat, lng: this.state.long },
+          time_stamp: timestamp
+        })
+      }).then(res => {
+        return res.json()
+      }).then((json) => {
+        console.log(json)
+      }).catch(err => {
+        console.error(err);
+      });
   }
 
   showCallout = (place) => console.log(`Show callout called ${place}`);
