@@ -38,31 +38,32 @@ class App extends React.Component {
   }
 
   // Fetches places based on timestamp & user location 
-  getPlaces = () => {
+  getPlaces = async () => {
     // The API endpoint to get the places
     const apiEndpoint = "https://crowdless.com/default/places";
     // Converting current date into UTC timestamp
     const timestamp = new Date().toUTCString(); 
 
-       // Fetching the places from the API
-    fetch(apiEndpoint, {
+    // Fetching the places from the API
+    try {
+      let response = await fetch(apiEndpoint, {
         method: 'POST',
         headers: {
-          'x-api-key': `${API_KEY}`,
-          'Accept': 'application/json',
+          'X-API-KEY': API_KEY,
+          Accept: 'application/json',
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           coords: { lat: this.state.lat, lng: this.state.long },
           time_stamp: timestamp
         })
-      }).then(res => {
-        return res.json()
-      }).then((json) => {
-        console.log(json)
-      }).catch(err => {
-        console.error(err);
       });
+      let json = await response.json();
+      console.log(json);
+    } catch (e) {
+      console.error(e);
+    }
+
   }
 
   showCallout = (place) => console.log(`Show callout called ${place}`);
