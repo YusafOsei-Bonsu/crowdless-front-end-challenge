@@ -5,7 +5,7 @@ This mini-project focuses on creating a functional/class component (in React Nat
 - Initially fetch places for a given user location and time.
 - Display places as markers (images in attachment) with different colors on the map component. (green ⇔ not busy, orange ⇔ busy, red ⇔ very busy).
 
-First, I set the map to fill the entire viewport. Next, I wrote code that located and tracked the user's current location. 
+First, I set the map to fill the entire viewport. Next, I wrote code that located and tracked the user's current location. Afterward, using the Fetch API, I made multiple attempts to gather places from the Crowdless API. However, what I didn't realise that this was a dummy API; therefore, no responses were being received. This was when I proceeded to write the remaining code which would store and display places as icon-based markers on the map (which was guess-work, since I couldn't run the app without the API to provide the locational data).
 
 ## Tech Stack
 - React Native
