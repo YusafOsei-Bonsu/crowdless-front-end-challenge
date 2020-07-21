@@ -1,6 +1,7 @@
 import React from 'react';
 import MapView, { PROVIDER_GOOGLE,  Marker } from 'react-native-maps';
 import { StyleSheet, View, Dimensions, Alert } from 'react-native';
+import Place from './components/Place.jsx';
 import { API_KEY } from "@env";
 
 class App extends React.Component {
@@ -105,6 +106,9 @@ class App extends React.Component {
                 longitude: 0
               }
             } /> 
+
+            {/* Showing each place as markers */}
+            {this.state.places.map(place => <Place key={place.id} latitude={place.latitude} longitude={place.longitude} busyLvl={place.status}/> )}
             
         </MapView>
 
