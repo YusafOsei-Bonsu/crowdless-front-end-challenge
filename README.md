@@ -16,4 +16,5 @@ First, I set the map to fill the entire viewport. Next, I wrote code that locate
 | --------------- |----------------------:| 
 | Expo couldn't run app because `38.0.0 is not a valid sdk version`  | Entered `expo client:install:android` into the terminal to upgrade the expo client app |
 | `Error: react-native-permissions: NativeModule.RNPermissions is null`  | Replaced all permission code with the built-in navigator geolocation |
-| `TypeError: Network request failed` Axios has trouble with sending POST requests to the API |  |
+| `TypeError: Network request failed` Axios has trouble with sending POST requests to the API | Informed the API was a "dummy" API, which means I wouldn't receive any responses if I sent requests to it |
+| Unsure on how to append places into the state's list (i.e. places) | [Spread operator](https://medium.com/@thejasonfile/using-the-spread-operator-in-react-setstate-c8a14fc51be1) |
