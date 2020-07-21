@@ -69,7 +69,8 @@ class App extends React.Component {
     })
     .catch(error => {
       console.error(error);
-    })
+    });
+
   }
 
   showCallout = (place) => console.log(`Show callout called ${place}`);
