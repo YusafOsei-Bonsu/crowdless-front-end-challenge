@@ -42,7 +42,8 @@ class App extends React.Component {
     // The API endpoint to get the places
     const apiEndpoint = "https://crowdless.com/default/places";
     // Converting current date into UTC timestamp
-    const timestamp = new Date().toUTCString(); 
+    const timestamp = new Date().toUTCString();
+    console.log(timestamp); 
 
     // Fetching the places from the API
     try {
