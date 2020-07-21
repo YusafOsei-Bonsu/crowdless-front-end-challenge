@@ -77,8 +77,6 @@ class App extends React.Component {
 
   }
 
-  showCallout = (place) => console.log(`Show callout called ${place}`);
-
   componentDidMount() {
     this.findCurrentLocation();
     this.getPlaces();
