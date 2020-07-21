@@ -65,7 +65,10 @@ class App extends React.Component {
       return response.json()
     })
     .then(data => {
-      console.log(data);
+      // Appending the fetched places into the state 
+      for (let place of data) {
+        this.setState({ places: [...this.state.places, place] })
+      }
     })
     .catch(error => {
       console.error(error);
