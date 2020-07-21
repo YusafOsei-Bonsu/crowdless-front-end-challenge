@@ -9,7 +9,6 @@
   },
   "dependencies": {
     "@react-native-community/geolocation": "^2.0.2",
-    "axios": "^0.19.2",
     "babel-plugin-dotenv-import": "^2.1.0",
     "expo": "^38.0.0",
     "expo-location": "~8.2.1",

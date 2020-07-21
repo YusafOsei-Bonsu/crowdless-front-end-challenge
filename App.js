@@ -8,6 +8,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      // Holds all the places retrieved from the API
       places: [],
       lat: 0.0,
       long: 0.0
@@ -27,8 +28,8 @@ class App extends React.Component {
       
       this.setState({ 
         initialPosition, 
-        lat: initialPosition.latitude, 
-        long: initialPosition.longitude 
+        lat: position.coords.latitude, 
+        long: position.coords.longitude 
       });
     }, err => {
       Alert.alert(err.message);
@@ -38,33 +39,37 @@ class App extends React.Component {
   }
 
   // Fetches places based on timestamp & user location 
-  getPlaces = async () => {
+  getPlaces = () => {
     // The API endpoint to get the places
-    const apiEndpoint = "https://crowdless.com/default/places";
+    const url = "https://crowdless.com/default/places";
     // Converting current date into UTC timestamp
     const timestamp = new Date().toUTCString();
-    console.log(timestamp); 
 
     // Fetching the places from the API
-    try {
-      let response = await fetch(apiEndpoint, {
-        method: 'POST',
-        headers: {
-          'X-API-KEY': API_KEY,
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'X-API-KEY': API_KEY,
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      }, 
+      body: JSON.stringify({
+        coords: { 
+          lat: this.state.lat, 
+          lng: this.state.long 
         },
-        body: JSON.stringify({
-          coords: { lat: this.state.lat, lng: this.state.long },
-          time_stamp: timestamp
-        })
-      });
-      let json = await response.json();
-      console.log(json);
-    } catch (e) {
-      console.error(e);
-    }
-
+        time_stamp: timestamp
+      })
+    })
+    .then(response => {
+      return response.json()
+    })
+    .then(data => {
+      console.log(data);
+    })
+    .catch(error => {
+      console.error(error);
+    })
   }
 
   showCallout = (place) => console.log(`Show callout called ${place}`);
